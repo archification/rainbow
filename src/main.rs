@@ -1,25 +1,8 @@
 extern crate rand;
 extern crate termion;
 
-use std::io::{
-    stdout,
-    Write
-};
 use rand::Rng;
-use termion::{
-    clear,
-    color,
-    cursor::Goto
-};
-
-fn clear() {
-    println!(
-        "{}{}",
-        clear::All,
-        Goto(1, 0)
-    );
-    let _ = stdout().flush();
-}
+use termion::color;
 
 fn stuff() {
     loop {
@@ -41,6 +24,5 @@ fn stuff() {
 }
 
 fn main() {
-    clear();
     stuff();
 }
