@@ -1,24 +1,28 @@
 extern crate rand;
-extern crate termion;
+extern crate crossterm;
 
 use rand::Rng;
-use termion::color;
+use crossterm::style::{
+    Color,
+    ResetColor,
+    SetBackgroundColor,
+    SetForegroundColor
+};
 
 fn stuff() {
     loop {
         let mut rng = rand::thread_rng();
         let (r, g, b): (u8, u8, u8) = rng.gen();
-        let rgb = termion::color::Rgb(r, g, b);
+        let rgb = Color::Rgb { r:r, g:g, b:b };
         let (x, y, z): (u8, u8, u8) = rng.gen();
-        let xyz = termion::color::Rgb(x, y, z);
+        let xyz = Color::Rgb { r:x, g:y, b:z };
         println!(
-            "{}{}{}  guacamolification  {}{}{}",
-            color::Fg(rgb),
-            color::Bg(xyz),
+            "{}{}{} guacamolification {}{}",
+            SetForegroundColor(rgb),
+            SetBackgroundColor(xyz),
             rng.gen::<i64>(),
             rng.gen::<i64>(),
-            color::Fg(color::Reset),
-            color::Bg(xyz)
+            ResetColor
         );
     }
 }
