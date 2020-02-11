@@ -3,10 +3,6 @@ extern crate crossterm;
 
 use rand::Rng;
 use crossterm::{
-    terminal::{
-        Clear,
-        ClearType
-    },
     style::{
         Color,
         ResetColor,
@@ -16,7 +12,6 @@ use crossterm::{
 };
 
 fn stuff() {
-    Clear(ClearType::All);
     loop {
         let mut rng = rand::thread_rng();
         let (r, g, b): (u8, u8, u8) = rng.gen();
