@@ -19,9 +19,17 @@ fn stuff() {
         let (x, y, z): (u8, u8, u8) = rng.gen();
         let xyz = Color::Rgb { r:x, g:y, b:z };
         println!(
-            "{}{}{} guacamolification {}{}",
+            "{}{}{}{}{}{}{} guacamolification {}{}{}{}{}{}",
             SetForegroundColor(rgb),
             SetBackgroundColor(xyz),
+            rng.gen::<i64>(),
+            rng.gen::<i64>(),
+            rng.gen::<i64>(),
+            rng.gen::<i64>(),
+            rng.gen::<i64>(),
+            rng.gen::<i64>(),
+            rng.gen::<i64>(),
+            rng.gen::<i64>(),
             rng.gen::<i64>(),
             rng.gen::<i64>(),
             ResetColor
