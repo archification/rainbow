@@ -1,44 +1,41 @@
-extern crate rand;
-extern crate crossterm;
-
-//use std::{thread, time};
 use rand::Rng;
 use crossterm::{
-    style::{
-        Color,
-        ResetColor,
-        SetBackgroundColor,
-        SetForegroundColor
-    },
+    style::{Color, ResetColor, SetBackgroundColor, SetForegroundColor},
+    ExecutableCommand,
 };
+use std::io::{stdout, Write};
 
-fn stuff() {
+fn print_colored_text() {
+    let mut rng = rand::rng();
+    let mut stdout = stdout();
     loop {
-        //thread::sleep(time::Duration::from_millis(100));
-        let mut rng = rand::thread_rng();
-        let (r, g, b): (u8, u8, u8) = rng.gen();
-        let rgb = Color::Rgb { r:r, g:g, b:b };
-        let (x, y, z): (u8, u8, u8) = rng.gen();
-        let xyz = Color::Rgb { r:x, g:y, b:z };
-        println!(
-            "{}{}{}{}{}{}{} guacamolification {}{}{}{}{}{}",
-            SetForegroundColor(rgb),
-            SetBackgroundColor(xyz),
-            rng.gen::<i64>(),
-            rng.gen::<i64>(),
-            rng.gen::<i64>(),
-            rng.gen::<i64>(),
-            rng.gen::<i64>(),
-            rng.gen::<i64>(),
-            rng.gen::<i64>(),
-            rng.gen::<i64>(),
-            rng.gen::<i64>(),
-            rng.gen::<i64>(),
-            ResetColor
-        );
+        let foreground = Color::Rgb {
+            r: rng.random(),
+            g: rng.random(),
+            b: rng.random(),
+        };
+        let background = Color::Rgb {
+            r: rng.random(),
+            g: rng.random(),
+            b: rng.random(),
+        };
+        stdout.execute(crossterm::terminal::Clear(crossterm::terminal::ClearType::CurrentLine))
+              .expect("Failed to clear line");
+        stdout.execute(SetForegroundColor(foreground))
+              .expect("Failed to set foreground color");
+        stdout.execute(SetBackgroundColor(background))
+              .expect("Failed to set background color");
+        for _ in 0..11 {
+            print!("{} ", rng.random::<i64>());
+        }
+        print!("guacamolification ");
+        stdout.execute(ResetColor)
+              .expect("Failed to reset colors");
+        stdout.flush()
+              .expect("Failed to flush stdout");
     }
 }
 
 fn main() {
-    stuff();
+    print_colored_text();
 }
